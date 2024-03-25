@@ -35,6 +35,10 @@ environments:
     value: "ojs"
   - key: "MYSQL_PASSWORD"
     value: "random_password"
+  - key: "DEFAULT_SENDER"
+    value: "[DOMAIN]@vm.elestio.app"
+  - key: "API_KEY_SECRET"
+    value: "random_password"
 
 config:
   runTime: "dockerCompose"
