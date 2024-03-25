@@ -21,7 +21,7 @@ sleep 10s;
 config=$(docker-compose exec -T ojs sh -c "cat /var/www/html/config.inc.php")
 PWD=$(pwd)
 
-cat config > $PWD/volumes/config/ojs.config.inc.php
+echo $config > $PWD/volumes/config/ojs.config.inc.php
 
 docker-compose down;
 
