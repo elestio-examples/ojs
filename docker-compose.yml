@@ -16,12 +16,21 @@ services:
       - 172.17.0.1:56151:3306
 
   ojs:
+    user: 0:0
     image: "pkpofficial/ojs:latest"
+    restart: always
     #    env_file:
     #      - .env
     ports:
       - "172.17.0.1:26708:443"
       # - "${HTTPS_PORT:-443}:443"
+    # environment:
+    #   - OJS_CLI_INSTALL=1
+    #   - SERVERNAME=${DOMAIN}
+    #   - OJS_DB_HOST=db
+    #   - OJS_DB_USER=${MYSQL_USER}
+    #   - OJS_DB_PASSWORD=${MYSQL_PASSWORD}
+    #   - OJS_DB_NAME=${MYSQL_DATABASE}
     volumes:
       - /etc/localtime:/etc/localtime
       - ./volumes/private:/var/www/files
