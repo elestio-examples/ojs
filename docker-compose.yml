@@ -1,17 +1,9 @@
-# File: docker-compose.yml
-# Access via "http://localhost:8081"
-#
-# Call example:
-# $ docker-compose up
-
 version: "3.6"
 
 services:
   db:
     image: elestio/mariadb:10.4
     restart: always
-    #    env_file:
-    #      - .env
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       MYSQL_DATABASE: "${MYSQL_DATABASE}"
@@ -20,8 +12,6 @@ services:
     volumes:
       - ./volumes/db:/var/lib/mysql
       - ./volumes/dump:/docker-entrypoint-initdb.d
-    #      - ./volumes/logs/db:/var/log/mysql
-    #      - ./volumes/config/db.charset.conf:/etc/mysql/conf.d/charset.cnf
     ports:
       - 172.17.0.1:56151:3306
 
@@ -30,7 +20,7 @@ services:
     #    env_file:
     #      - .env
     ports:
-      - "172.17.0.1:26708:80"
+      - "172.17.0.1:26708:443"
       # - "${HTTPS_PORT:-443}:443"
     volumes:
       - /etc/localtime:/etc/localtime
@@ -38,7 +28,7 @@ services:
       - ./volumes/public:/var/www/html/public
       #      - ./volumes/logs/app:/var/log/apache2
       #      # WARNING: You can only enable file-volumes if file exists in the container.
-      - ./volumes/config/ojs.config.inc.php:/var/www/html/config.inc.php
+      # - ./volumes/config/ojs.config.inc.php:/var/www/html/config.inc.php
     #      - ./volumes/config/apache.htaccess:/var/www/html/.htaccess
     #      - ./volumes/php.custom.ini:/usr/local/etc/php/conf.d/custom.ini
 
@@ -50,7 +40,7 @@ services:
     ports:
       - "172.17.0.1:18920:80"
     environment:
-      PMA_HOST: mariadb
+      PMA_HOST: db
       PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: ${ADMIN_PASSWORD}
